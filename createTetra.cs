@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 
-public class createTetra : MonoBehaviour {
+public class createTetra : MonoBehaviour
+{
 
 
     public bool sharedVertices = false;
@@ -14,7 +15,7 @@ public class createTetra : MonoBehaviour {
     Vector3 p0 = new Vector3(0, 0, 0);
     Vector3 p1 = new Vector3(1, 0, 0);
     Vector3 p2 = new Vector3(0.5f, 0, Mathf.Sqrt(0.75f));
-    Vector3 p3 = new Vector3(0.5f, Mathf.Sqrt(2f/3f), Mathf.Sqrt(3f)/6f);
+    Vector3 p3 = new Vector3(0.5f, Mathf.Sqrt(2f / 3f), Mathf.Sqrt(3f) / 6f);
     Mesh mesh;
 
     public Vector3[] getVectors()
@@ -116,13 +117,15 @@ public class createTetra : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         Rebuild();
         //Rebuild();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
