@@ -65,10 +65,11 @@ public class manager : MonoBehaviour {
         pai = new GameObject();
         pai.transform.position = new Vector3(0,0,0); //pivo
 
+        // COMO POSICIONAR E ROTACIONAR PAI E DEPOIS COLOCAR UM FILHO NELE
 
         pai.transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
+        pai.transform.Rotate(Vector3.up, 120f)
         pai.transform.Rotate(Vector3.forward, 180f);
-        pai.transform.Rotate(Vector3.up, 120f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         //vetGameObj[17].transform.Rotate(-162.6f, -305.3f, 33.3f);
 
