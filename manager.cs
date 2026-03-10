@@ -47,31 +47,86 @@ public class manager : MonoBehaviour {
         vetGameObj[12].transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[12].transform.Rotate(Vector3.forward, 180f);
 
-        vetGameObj[13].transform.position = new Vector3(0.5f * 4, 0.86603f * 2, 0.28868f * 2);
-        vetGameObj[13].transform.Rotate(Vector3.right, 36.87f);
-        vetGameObj[13].transform.Rotate(Vector3.forward, 180f);
 
 
-        vetGameObj[14].transform.position = new Vector3(1.5f, 0, Mathf.Sqrt(3) / 2);
+        vetGameObj[13].transform.position = new Vector3(1.5f, 0, Mathf.Sqrt(3) / 2);
+        vetGameObj[13].transform.Rotate(Vector3.up, 180f);
+
+        vetGameObj[14].transform.position = new Vector3(2.5f, 0, Mathf.Sqrt(3) / 2);
         vetGameObj[14].transform.Rotate(Vector3.up, 180f);
 
-        vetGameObj[15].transform.position = new Vector3(2.5f, 0, Mathf.Sqrt(3) / 2);
+        vetGameObj[15].transform.position = new Vector3(2f, 0, Mathf.Sqrt(3));
         vetGameObj[15].transform.Rotate(Vector3.up, 180f);
 
-        vetGameObj[16].transform.position = new Vector3(2f, 0, Mathf.Sqrt(3));
-        vetGameObj[16].transform.Rotate(Vector3.up, 180f);
 
 
         pai = new GameObject();
-        pai.transform.position = new Vector3(0,0,0); //pivo
 
-        // COMO POSICIONAR E ROTACIONAR PAI E DEPOIS COLOCAR UM FILHO NELE
-
-        pai.transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
-        pai.transform.Rotate(Vector3.up, 120f)
+        vetGameObj[16].transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
+        pai.transform.position = new Vector3(1f, 0.86603f, 0.28868f + Mathf.Sqrt(3) / 2);
+        pai.transform.Rotate(Vector3.down, 60f);
+        vetGameObj[16].transform.parent = pai.transform;
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
-        //vetGameObj[17].transform.Rotate(-162.6f, -305.3f, 33.3f);
+        vetGameObj[16].transform.parent = null;
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[17].transform.position = new Vector3(0f, 0.86603f, -0.28868f * 2);
+        pai.transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
+        pai.transform.Rotate(Vector3.down, 60f);
+        vetGameObj[17].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        vetGameObj[17].transform.parent = null;
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[18].transform.position = new Vector3(0.5f, 0.86603f * 2, -0.28868f);
+        pai.transform.position = new Vector3(1f, 0.86603f * 2, 0.28868f * 2);
+        pai.transform.Rotate(Vector3.down, 60f);
+        vetGameObj[18].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        vetGameObj[18].transform.parent = null;
+
+        // OUTRO LADO!!!!!
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[19].transform.position = new Vector3(0.5f * 4, 0.86603f, -0.28868f * 2);
+        pai.transform.position = new Vector3(0.5f * 5, 0.86603f, 0.28868f);
+        pai.transform.Rotate(Vector3.up, 60f);
+        vetGameObj[19].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        vetGameObj[19].transform.parent = null;
+
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[20].transform.position = new Vector3(0.5f * 3, 0.86603f, 0.28868f);
+        pai.transform.position = new Vector3(0.5f * 4, 0.86603f, 0.28868f + Mathf.Sqrt(3) / 2);
+        pai.transform.Rotate(Vector3.up, 60f);
+        vetGameObj[20].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        vetGameObj[20].transform.parent = null;
+
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[21].transform.position = new Vector3(0.5f * 3, 0.86603f, 0.28868f);
+        pai.transform.position = new Vector3(0.5f * 4, 0.86603f, 0.28868f + Mathf.Sqrt(3) / 2);
+        pai.transform.Rotate(Vector3.up, 60f);
+        vetGameObj[21].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        vetGameObj[21].transform.parent = null;
+
+        pai.transform.rotation = Quaternion.identity;
+        vetGameObj[22].transform.position = new Vector3(0.5f * 3, 0.86603f * 2, -0.28868f);
+        pai.transform.position = new Vector3(2f, 0.86603f * 2, 0.28868f * 2);
+        pai.transform.Rotate(Vector3.up, 60f);
+        vetGameObj[22].transform.parent = pai.transform;
+        pai.transform.Rotate(Vector3.forward, 180f);
+        pai.transform.Rotate(Vector3.right, 36.87f);
+        //vetGameObj[22].transform.parent = null;
 
 
 
@@ -86,9 +141,9 @@ public class manager : MonoBehaviour {
         //vetGameObj[3].transform.bounds
     }
 
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		//vetGameObj[3].transform.RotateAround(transform.position, Vector3.forward, 5f);
         //cria um gameobject: Pai. Tem eixo de rotacao
         //por o objeto como filho deste gameobject
