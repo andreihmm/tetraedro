@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// PRECISA DESATIVAR O GAME OBJECT DA SCENE PARA SUMIR O TETRAEDRO FANTASMA
 
 public class manager : MonoBehaviour
 {
@@ -165,7 +166,10 @@ public class manager : MonoBehaviour
 
         v1 = new GameObject();
         v1.transform.position = new Vector3(3, 0, 0);
-       
+
+        v2 = new GameObject();
+        v2.transform.position = new Vector3(1.5f, 0, Mathf.Sqrt(0.75f) * 3);
+
 
         //vetGameObj[3].transform.Rotate(110f,0f,0); // 90f
         // vetGameObj[3].transform.RotateAround(transform.position, Vector3.forward, 5f);
@@ -181,13 +185,8 @@ public class manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            pai.transform.rotation = Quaternion.identity;
-            vetGameObj[9].transform.parent = pai.transform;
-            pai.transform.Rotate(Vector3.up, 60f);
-            vetGameObj[9].transform.parent = null;
-        }
+
+        // GIRAR AS PONTAS
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -203,7 +202,7 @@ public class manager : MonoBehaviour
             pai.transform.Rotate(Vector3.forward, 60f);
             vetGameObj[0].transform.parent = null;
 
-            Debug.Log("f2.");
+            Debug.Log("f1.");
         }
 
 
@@ -222,6 +221,32 @@ public class manager : MonoBehaviour
             vetGameObj[2].transform.parent = null;
 
             Debug.Log("f2.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+
+            pai.transform.rotation = Quaternion.identity;
+            vetGameObj[9].transform.parent = pai.transform;
+            pai.transform.Rotate(Vector3.up, 60f);
+            vetGameObj[9].transform.parent = null;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Vector3 direcao = v2.transform.position - pai.transform.position;
+            direcao = direcao.normalized;
+
+            // Desenha o vetor na Scene
+            Debug.DrawRay(pai.transform.position, direcao * 5f, Color.red, 5f);
+
+            pai.transform.rotation = Quaternion.LookRotation(direcao);
+            vetGameObj[7].transform.SetParent(pai.transform);
+
+            pai.transform.Rotate(Vector3.forward, 60f);
+            vetGameObj[7].transform.parent = null;
+
+            Debug.Log("f4.");
         }
 
 
