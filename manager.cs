@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // PRECISA DESATIVAR O GAME OBJECT DA SCENE PARA SUMIR O TETRAEDRO FANTASMA
-
+// COMO DETECTAR QUAL TETRAEDRO ESTÁ EM QUAL POSIÇAO?
+// IDEIA => SUBSTITUIR NUMEROS HARD-CODED POR VARIAVEIS!!!
 public class manager : MonoBehaviour
 {
 
@@ -181,6 +183,10 @@ public class manager : MonoBehaviour
 
     }
 
+    Vector3 baricentro(GameObject tetraedro)
+    {
+        return (p0 + p1 + p2 + p3) / 4 + tetraedro.transform.position;
+    }
 
     // Update is called once per frame
     void Update()
@@ -190,7 +196,8 @@ public class manager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Vector3 direcao = v0.transform.position - pai.transform.position;
+            //Vector3 direcao = vetGameObj[0].transform.position - pai.transform.position;
+            Vector3 direcao = baricentro(vetGameObj[0]) - pai.transform.position;
             direcao = direcao.normalized;
 
             // Desenha o vetor na Scene
@@ -208,7 +215,10 @@ public class manager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            Vector3 direcao = v1.transform.position - pai.transform.position;
+            //Vector3 direcao = vetGameObj[2].transform.position - pai.transform.position;
+            Vector3 direcao = baricentro(vetGameObj[2]) - pai.transform.position;
+
+
             direcao = direcao.normalized;
 
             // Desenha o vetor na Scene
@@ -234,7 +244,7 @@ public class manager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            Vector3 direcao = v2.transform.position - pai.transform.position;
+            Vector3 direcao = vetGameObj[7].transform.position - pai.transform.position;
             direcao = direcao.normalized;
 
             // Desenha o vetor na Scene
@@ -248,6 +258,23 @@ public class manager : MonoBehaviour
 
             Debug.Log("f4.");
         }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            int[] tetraedros_base = { 0, 1, 2, 5, 6, 7, 10, 11, 13, 14, 15, 16, 17, 19, 20};
+            pai.transform.rotation = Quaternion.identity;
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.SetParent(pai.transform);
+            }
+            pai.transform.Rotate(Vector3.up, 60f);
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.parent = null;
+
+            }
+        }
+
 
 
         //vetGameObj[3].transform.RotateAround(transform.position, Vector3.forward, 5f);
