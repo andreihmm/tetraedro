@@ -185,7 +185,8 @@ public class manager : MonoBehaviour
 
     Vector3 baricentro(GameObject tetraedro)
     {
-        return (p0 + p1 + p2 + p3) / 4 + tetraedro.transform.position;
+        Vector3 centroLocal = (p0 + p1 + p2 + p3) / 4;
+        return tetraedro.transform.TransformPoint(centroLocal);
     }
 
     // Update is called once per frame
@@ -199,14 +200,15 @@ public class manager : MonoBehaviour
             //Vector3 direcao = vetGameObj[0].transform.position - pai.transform.position;
             Vector3 direcao = baricentro(vetGameObj[0]) - pai.transform.position;
             direcao = direcao.normalized;
-
+            Debug.Log(direcao);
+                
             // Desenha o vetor na Scene
             Debug.DrawRay(pai.transform.position, direcao * 5f, Color.red, 5f);
 
             pai.transform.rotation = Quaternion.LookRotation(direcao);
             vetGameObj[0].transform.SetParent(pai.transform);
 
-            pai.transform.Rotate(Vector3.forward, 60f);
+            pai.transform.Rotate(Vector3.forward, 120f);
             vetGameObj[0].transform.parent = null;
 
             Debug.Log("f1.");
@@ -217,8 +219,6 @@ public class manager : MonoBehaviour
         {
             //Vector3 direcao = vetGameObj[2].transform.position - pai.transform.position;
             Vector3 direcao = baricentro(vetGameObj[2]) - pai.transform.position;
-
-
             direcao = direcao.normalized;
 
             // Desenha o vetor na Scene
@@ -227,7 +227,7 @@ public class manager : MonoBehaviour
             pai.transform.rotation = Quaternion.LookRotation(direcao);
             vetGameObj[2].transform.SetParent(pai.transform);
 
-            pai.transform.Rotate(Vector3.forward, 60f);
+            pai.transform.Rotate(Vector3.forward, 120f);
             vetGameObj[2].transform.parent = null;
 
             Debug.Log("f2.");
@@ -238,13 +238,13 @@ public class manager : MonoBehaviour
 
             pai.transform.rotation = Quaternion.identity;
             vetGameObj[9].transform.parent = pai.transform;
-            pai.transform.Rotate(Vector3.up, 60f);
+            pai.transform.Rotate(Vector3.up, 120f);
             vetGameObj[9].transform.parent = null;
         }
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            Vector3 direcao = vetGameObj[7].transform.position - pai.transform.position;
+            Vector3 direcao = baricentro(vetGameObj[7]) - pai.transform.position;
             direcao = direcao.normalized;
 
             // Desenha o vetor na Scene
@@ -253,21 +253,50 @@ public class manager : MonoBehaviour
             pai.transform.rotation = Quaternion.LookRotation(direcao);
             vetGameObj[7].transform.SetParent(pai.transform);
 
-            pai.transform.Rotate(Vector3.forward, 60f);
+            pai.transform.Rotate(Vector3.forward, 120f);
             vetGameObj[7].transform.parent = null;
 
             Debug.Log("f4.");
         }
 
+        // ROTACIONAR BASE
+
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            int[] tetraedros_base = { 0, 1, 2, 5, 6, 7, 10, 11, 13, 14, 15, 16, 17, 19, 20};
+            int[] tetraedros_base = { 0, 1, 2, 5, 6, 7, 10, 11, 13, 14, 15, 16, 17, 19, 20 };
             pai.transform.rotation = Quaternion.identity;
             for (int i = 0; i < tetraedros_base.Length; i++)
             {
                 vetGameObj[tetraedros_base[i]].transform.SetParent(pai.transform);
             }
-            pai.transform.Rotate(Vector3.up, 60f);
+            pai.transform.Rotate(Vector3.up, 120f);
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.parent = null;
+
+            }
+        }
+
+        // ROTACIONAR 7 TETRAEDRINHOS
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            int[] tetraedros_base = { 1, 2, 4, 6, 11, 14, 19 };
+
+            Vector3 direcao = baricentro(vetGameObj[2]) - pai.transform.position;
+            direcao = direcao.normalized;
+
+            Debug.DrawRay(pai.transform.position, direcao * 5f, Color.red, 5f);
+
+            pai.transform.rotation = Quaternion.LookRotation(direcao);
+
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.SetParent(pai.transform);
+            }
+
+            pai.transform.Rotate(Vector3.forward, 120f);
+
             for (int i = 0; i < tetraedros_base.Length; i++)
             {
                 vetGameObj[tetraedros_base[i]].transform.parent = null;
@@ -276,6 +305,32 @@ public class manager : MonoBehaviour
         }
 
 
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            int[] tetraedros_base = { 0, 1, 3, 5, 10, 13, 17 };
+
+            Vector3 direcao = baricentro(vetGameObj[0]) - pai.transform.position;
+            direcao = direcao.normalized;
+
+            Debug.DrawRay(pai.transform.position, direcao * 5f, Color.red, 5f);
+
+            pai.transform.rotation = Quaternion.LookRotation(direcao);
+
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.SetParent(pai.transform);
+            }
+
+            pai.transform.Rotate(Vector3.forward, 120f);
+
+            for (int i = 0; i < tetraedros_base.Length; i++)
+            {
+                vetGameObj[tetraedros_base[i]].transform.parent = null;
+
+            }
+        }
+
+        // GAME OBJECT NO BARICENTRO DE CADA TETRAEDRO PARA DEFINIR QUAL ESTÁ EM QUAL POSIÇÃO
 
         //vetGameObj[3].transform.RotateAround(transform.position, Vector3.forward, 5f);
         //cria um gameobject: Pai. Tem eixo de rotacao
