@@ -16,6 +16,7 @@ public class manager : MonoBehaviour
 
     public GameObject tetrahedron; // prefab da camrera
     public GameObject[] vetGameObj = new GameObject[24];
+    public GameObject[] gameObjBaricentro = new GameObject[24];
     GameObject pai;
     Vector3 m_Center;
     GameObject v0;
@@ -34,6 +35,8 @@ public class manager : MonoBehaviour
     }*/
     void Start()
     {
+        pai = new GameObject();
+        pai.name = "pai";
         for (int i = 0; i < 24; i++)
         {
 
@@ -42,29 +45,52 @@ public class manager : MonoBehaviour
 
                 vetGameObj[i] = Instantiate(tetrahedron, new Vector3(0, 0, 0), Quaternion.identity); // tetraedro base
                 vetGameObj[i].name = "Tetra_" + i;
-                Debug.Log(i + " -> " + vetGameObj[i].transform.position);
+                gameObjBaricentro[i] = new GameObject();
+                gameObjBaricentro[i].name = "Bari_" + i;
+                gameObjBaricentro[i].transform.position = baricentro(vetGameObj[i]);
 
             }
             else
             {
-
                 vetGameObj[i] = Instantiate(tetrahedron, new Vector3(vetGameObj[i - 1].transform.position.x + 1, 0, 0), vetGameObj[i - 1].transform.rotation);
                 vetGameObj[i].name = "Tetra_" + i;
-                Debug.Log(i + " -> " + vetGameObj[i].transform.position);
-
+                gameObjBaricentro[i] = new GameObject();
+                gameObjBaricentro[i].name = "Bari_" + i;
+                gameObjBaricentro[i].transform.position = baricentro(vetGameObj[i]);
             }//i-1 posicao anterior
         }
 
+        vetGameObj[0].transform.parent = gameObjBaricentro[0].transform;
+        vetGameObj[1].transform.parent = gameObjBaricentro[1].transform;
+        vetGameObj[2].transform.parent = gameObjBaricentro[2].transform;
 
 
         //pegar tetra da posicao 3 e transladar
         vetGameObj[3].transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
+        gameObjBaricentro[3].transform.position = baricentro(vetGameObj[3]);
+        vetGameObj[3].transform.parent = gameObjBaricentro[3].transform;
+
         vetGameObj[4].transform.position = new Vector3(0.5f * 3, 0.86603f, 0.28868f);
+        gameObjBaricentro[4].transform.position = baricentro(vetGameObj[4]);
+
         vetGameObj[5].transform.position = new Vector3(0.5f, 0, Mathf.Sqrt(3) / 2);
+        gameObjBaricentro[5].transform.position = baricentro(vetGameObj[5]);
+        vetGameObj[5].transform.parent = gameObjBaricentro[5].transform;
+
         vetGameObj[6].transform.position = new Vector3(0.5f * 3, 0, Mathf.Sqrt(3) / 2);
+        gameObjBaricentro[6].transform.position = baricentro(vetGameObj[6]);
+        vetGameObj[6].transform.parent = gameObjBaricentro[6].transform;
+
         vetGameObj[7].transform.position = new Vector3(0.5f * 2, 0, Mathf.Sqrt(3));
+        gameObjBaricentro[7].transform.position = baricentro(vetGameObj[7]);
+        vetGameObj[7].transform.parent = gameObjBaricentro[7].transform;
+
         vetGameObj[8].transform.position = new Vector3(0.5f * 2, 0.86603f, 0.28868f + Mathf.Sqrt(3) / 2);
+        gameObjBaricentro[8].transform.position = baricentro(vetGameObj[8]);
+
         vetGameObj[9].transform.position = new Vector3(0.5f * 2, 0.86603f * 2, 0.28868f * 2);
+        gameObjBaricentro[9].transform.position = baricentro(vetGameObj[9]);
+
 
         // INVERTIDOS 
 
@@ -72,29 +98,38 @@ public class manager : MonoBehaviour
         vetGameObj[10].transform.position = new Vector3(0.5f * 3, 0.86603f, 0.28868f);
         vetGameObj[10].transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[10].transform.Rotate(Vector3.forward, 180f);
+        gameObjBaricentro[10].transform.position = baricentro(vetGameObj[10]);
+        vetGameObj[10].transform.parent = gameObjBaricentro[10].transform;
+
 
         vetGameObj[11].transform.position = new Vector3(0.5f * 5, 0.86603f, 0.28868f);
         vetGameObj[11].transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[11].transform.Rotate(Vector3.forward, 180f);
+        gameObjBaricentro[11].transform.position = baricentro(vetGameObj[11]);
+        vetGameObj[11].transform.parent = gameObjBaricentro[11].transform;
+
 
         vetGameObj[12].transform.position = new Vector3(0.5f * 4, 0.86603f * 2, 0.28868f * 2);
         vetGameObj[12].transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[12].transform.Rotate(Vector3.forward, 180f);
+        gameObjBaricentro[12].transform.position = baricentro(vetGameObj[12]);
 
 
 
         vetGameObj[13].transform.position = new Vector3(1.5f, 0, Mathf.Sqrt(3) / 2);
         vetGameObj[13].transform.Rotate(Vector3.up, 180f);
+        gameObjBaricentro[13].transform.position = baricentro(vetGameObj[13]);
+        vetGameObj[13].transform.parent = gameObjBaricentro[13].transform;
 
         vetGameObj[14].transform.position = new Vector3(2.5f, 0, Mathf.Sqrt(3) / 2);
         vetGameObj[14].transform.Rotate(Vector3.up, 180f);
+        gameObjBaricentro[14].transform.position = baricentro(vetGameObj[14]);
+        vetGameObj[14].transform.parent = gameObjBaricentro[14].transform;
 
         vetGameObj[15].transform.position = new Vector3(2f, 0, Mathf.Sqrt(3));
         vetGameObj[15].transform.Rotate(Vector3.up, 180f);
-
-
-
-        pai = new GameObject();
+        gameObjBaricentro[15].transform.position = baricentro(vetGameObj[15]);
+        vetGameObj[15].transform.parent = gameObjBaricentro[15].transform;
 
         vetGameObj[16].transform.position = new Vector3(0.5f, 0.86603f, 0.28868f);
         pai.transform.position = new Vector3(1f, 0.86603f, 0.28868f + Mathf.Sqrt(3) / 2);
@@ -103,6 +138,9 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[16].transform.parent = null;
+        gameObjBaricentro[16].transform.position = baricentro(vetGameObj[16]);
+        vetGameObj[16].transform.parent = gameObjBaricentro[16].transform;
+
 
         pai.transform.rotation = Quaternion.identity;
         vetGameObj[17].transform.position = new Vector3(0f, 0.86603f, -0.28868f * 2);
@@ -112,6 +150,8 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[17].transform.parent = null;
+        gameObjBaricentro[17].transform.position = baricentro(vetGameObj[17]);
+        vetGameObj[17].transform.parent = gameObjBaricentro[17].transform;
 
         pai.transform.rotation = Quaternion.identity;
         vetGameObj[18].transform.position = new Vector3(0.5f, 0.86603f * 2, -0.28868f);
@@ -121,6 +161,7 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[18].transform.parent = null;
+        gameObjBaricentro[18].transform.position = baricentro(vetGameObj[18]);
 
         // OUTRO LADO!!!!!
 
@@ -132,6 +173,8 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[19].transform.parent = null;
+        gameObjBaricentro[19].transform.position = baricentro(vetGameObj[19]);
+        vetGameObj[19].transform.parent = gameObjBaricentro[19].transform;
 
 
         pai.transform.rotation = Quaternion.identity;
@@ -142,6 +185,8 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[20].transform.parent = null;
+        gameObjBaricentro[20].transform.position = baricentro(vetGameObj[20]);
+        vetGameObj[20].transform.parent = gameObjBaricentro[20].transform;
 
 
         pai.transform.rotation = Quaternion.identity;
@@ -152,6 +197,7 @@ public class manager : MonoBehaviour
         pai.transform.Rotate(Vector3.forward, 180f);
         pai.transform.Rotate(Vector3.right, 36.87f);
         vetGameObj[21].transform.parent = null;
+        gameObjBaricentro[21].transform.position = baricentro(vetGameObj[21]);
 
 
         pai.transform.rotation = Quaternion.identity;
@@ -201,7 +247,7 @@ public class manager : MonoBehaviour
             Vector3 direcao = baricentro(vetGameObj[0]) - pai.transform.position;
             direcao = direcao.normalized;
             Debug.Log(direcao);
-                
+
             // Desenha o vetor na Scene
             Debug.DrawRay(pai.transform.position, direcao * 5f, Color.red, 5f);
 
@@ -264,17 +310,33 @@ public class manager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F5))
         {
             int[] tetraedros_base = { 0, 1, 2, 5, 6, 7, 10, 11, 13, 14, 15, 16, 17, 19, 20 };
+            GameObject[] auxiliar = { };
+
             pai.transform.rotation = Quaternion.identity;
             for (int i = 0; i < tetraedros_base.Length; i++)
             {
+                auxiliar[i] = gameObjBaricentro[i];
+
+                // MODIFICAR QUAL TETRAEDRO É FILHO DE QUAL BARICENTRO COM BASE NA ÚLTIMA ROTAÇÃO
                 vetGameObj[tetraedros_base[i]].transform.SetParent(pai.transform);
             }
             pai.transform.Rotate(Vector3.up, 120f);
-            for (int i = 0; i < tetraedros_base.Length; i++)
-            {
-                vetGameObj[tetraedros_base[i]].transform.parent = null;
 
-            }
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
+            vetGameObj[tetraedros_base[0]].transform.parent = gameObjBaricentro[];
         }
 
         // ROTACIONAR 7 TETRAEDRINHOS
